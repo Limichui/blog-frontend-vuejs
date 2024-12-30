@@ -1,4 +1,4 @@
-# Aplicación frontend de un CRUD de cursos realizado el Vue.js 3
+# Aplicación frontend de un blog de cursos online realizado el Vue.js 3
 
 ## Integrante: Limbert Olmos Mercado
 
@@ -16,7 +16,12 @@ npm run serve
 ```
 npm run build
 ```
-## Para el Backend en json-server ejecutar lo siguiente
+## Para el Backend en json-server Installación 
+```
+npm install -g json-server@0.17.1
+```
+## Levantar el servicio de json-server
+Dirigirse a la carpeta del proyecto hasta la carpeta db, Ejemplo: 'C:\blog-frontend-vuejs\db>
 ```
 json-server --watch db.json --port 4000 
 ```

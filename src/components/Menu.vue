@@ -3,11 +3,16 @@
         <div class="logo">
             <img src="@/assets/logo.png" alt="Mi Logo" />
         </div>
-        <button class="hamburger" @click="toggleMenu"></button>
-        <!-- Ícono de hamburguesa -->
-        <span>Hola</span>
-
-        <div class="menu" :class="{ active: isMenuOpen }">
+        <!-- Botón de menú hamburguesa -->
+        <span class="hamburger-container">
+            <button class="hamburger" @click="toggleMenu" aria-label="Toggle Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </span>
+        <!-- Menú desplegable -->
+        <div class="menu" :class="{ active: isMenuOpen || isDesktop }">
             <slot></slot>
         </div>
     </div>
@@ -18,17 +23,28 @@ export default {
     name: 'Menu',
     data() {
         return {
-            isMenuOpen: false,
+            isMenuOpen: false, // Menú cerrado por defecto
+            isDesktop: window.innerWidth > 768, // Detecta si es escritorio o móvil
         };
-    },
-    computed: {
     },
     methods: {
         toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
+            this.isMenuOpen = !this.isMenuOpen; // Alterna el estado del menú
+        },
+        handleResize() {
+            this.isDesktop = window.innerWidth > 768; // Actualiza el estado en base al tamaño de la ventana
+            if (this.isDesktop) {
+                this.isMenuOpen = false; // Asegura que el menú no quede abierto innecesariamente
+            }
+        },
     },
-    }
-}
+    mounted() {
+        window.addEventListener('resize', this.handleResize); // Escucha cambios en el tamaño de la ventana
+    },
+    beforeUnmount() {
+        window.removeEventListener('resize', this.handleResize); // Limpia el listener al desmontar el componente
+    },
+};
 </script>
 
 <style>
@@ -65,13 +81,14 @@ export default {
 }
 
 .navbar .logo img {
-    height: 40px; /* Ajusta la altura del logo */
+    height: 40px;
     width: auto;
 }
 
-/* Menú */
+/* Estilos del menú */
 .navbar .menu {
-    display: flex;
+    display: none; /* Oculto por defecto */
+    flex-direction: row; /* Horizontal por defecto */
     padding-right: 20px;
     transition: all 0.3s ease-in-out;
 }
@@ -80,7 +97,18 @@ export default {
     margin-left: 10px;
 }
 
-/* Botón de menú hamburguesa */
+/* Menú activo en móviles o visible en escritorio */
+.navbar .menu.active {
+    display: flex;
+}
+
+/* Estilos para el contenedor del botón hamburguesa */
+.hamburger-container {
+  position: absolute;
+  top: 10px; /* Ajusta la distancia desde el top */
+  right: 20px; /* Ajusta la distancia desde la derecha */
+}
+/* Botón hamburguesa */
 .hamburger {
     display: none;
     flex-direction: column;
@@ -102,25 +130,21 @@ export default {
 /* Responsive para pantallas pequeñas */
 @media (max-width: 768px) {
     .navbar {
-    flex-direction: column; /* Apila los elementos verticalmente */
-    justify-content: center;
-    }
-
-    .logo {
-    text-align: center;
-    margin-bottom: 10px; /* Espacio entre el logo y el botón */
+        /*flex-direction: column;*/
+        justify-content: center;
     }
 
     .menu {
-    display: none;
-    flex-direction: column;
-    position: absolute;
-    top: 60px;
-    right: 0;
-    background-color: #333;
-    width: 100%;
-    text-align: center;
-    padding: 10px 0;
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #333;
+        width: 100%;
+        text-align: center;
+        padding: 10px 0;
+        justify-content: center;
     }
 
     .menu.active {

@@ -3,191 +3,178 @@
     {
       "nombre": "Base de Datos",
       "estado": "Activo",
-      "id": 2
+      "id": 1
     },
     {
       "nombre": "Bootcamp",
       "estado": "Activo",
-      "id": 3
+      "id": 2
     },
     {
       "nombre": "Diseño Web",
       "estado": "Activo",
-      "id": 4
+      "id": 3
     },
     {
       "nombre": "Estructura de Datos",
       "estado": "Activo",
-      "id": 5
+      "id": 4
     },
     {
       "nombre": "Inteligencia Artificial",
       "estado": "Activo",
-      "id": 6
+      "id": 5
     },
     {
       "nombre": "Programación",
       "estado": "Activo",
-      "id": 7
+      "id": 6
     }
   ],
   "docentes": [
     {
-      "nombre": "Fernando Gonzales Luna",
-      "email": "fernando.gonzales@gmail.com",
-      "telefono": "424-342-23",
-      "direccion": "Av. Bush, Edif. Olivos Nro 345, Piso 2, Depto. 202",
+      "nombre": "Luis Caprirolo",
+      "email": "luis.caprirolo@gmail.com",
+      "telefono": "765-256-12",
+      "direccion": "Av. los Álamos Nro. 35, Edificio La Fuente, Piso 3, Depto. 302",
       "id": 1
     },
     {
-      "nombre": "Luis Alvarez Martinez",
-      "email": "luis.alvarez-m@gmail.com",
-      "telefono": "654-04-678",
-      "direccion": "Calle Padilla Nro. 123 esq. Av. Los Álamos",
-      "id": 2,
-      "titulo": "Bases de Datos NoSQL con Mongo DB",
-      "duracion": "60",
-      "categoriaId": 4,
-      "docenteId": 2,
-      "estado": "Activo",
-      "contenido": "Seguro conoces las tradicionales bases de datos relacionales basadas en tablas como MySQL o Postgres. Pero, ¿sabías que existen sistemas de bases de datos no basados en tablas y que pueden darte el mismo o mejor rendimiento? Estos sistemas se llaman NoSQL y MongoDB es uno de los más populares del mundo, usado por millones de desarrolladores y empresas como Adobe, Google, Cisco o Electronic Arts",
-      "categoria": {
-        "nombre": "Base de Datos",
-        "estado": "Activo",
-        "id": 2
-      },
-      "docente": {
-        "nombre": "Luis Alvarez Martinez",
-        "email": "luis.alvarez-m@gmail.com",
-        "telefono": "654-04-678",
-        "direccion": "Calle Padilla Nro. 123 esq. Av. Los Álamos",
-        "id": 2,
-        "titulo": "Bases de Datos NoSQL con Mongo DB",
-        "duracion": "60",
-        "categoriaId": 3,
-        "docenteId": 2,
-        "estado": "Activo",
-        "contenido": "Seguro conoces las tradicionales bases de datos relacionales basadas en tablas como MySQL o Postgres. Pero, ¿sabías que existen sistemas de bases de datos no basados en tablas y que pueden darte el mismo o mejor rendimiento? Estos sistemas se llaman NoSQL y MongoDB es uno de los más populares del mundo, usado por millones de desarrolladores y empresas como Adobe, Google, Cisco o Electronic Arts",
-        "categoria": {
-          "nombre": "Base de Datos",
-          "estado": "Activo",
-          "id": 2
-        },
-        "docente": {
-          "nombre": "Luis Alvarez Martinez",
-          "email": "luis.alvarez-m@gmail.com",
-          "telefono": "654-04-678",
-          "direccion": "Calle Padilla Nro. 123 esq. Av. Los Álamos",
-          "id": 2
-        }
-      }
+      "nombre": "Carlos Gonzales",
+      "email": "carlos.gonzales@gmail.com",
+      "telefono": "623-110-43",
+      "direccion": "Calle Chiquitos Entre Av. Los Ceibos y Colón, Nro. 675 ",
+      "id": 2
     },
     {
-      "nombre": "Carlos Arandia Martinez",
-      "email": "carlos.arandia@gmail.com",
-      "telefono": "734-54-987",
-      "direccion": "Calle Linares Nro 12 esquina Cale 18 - Zona Calacoto",
+      "nombre": "Ana María Álvarez",
+      "email": "ana.maria.alvarez@hotmail.com",
+      "telefono": "432-456-32",
+      "direccion": "Calle Bueno Nro. 12, esquina Camacho",
       "id": 3
+    },
+    {
+      "nombre": "Sonia Martinez",
+      "email": "sonia.martinez@gmail.com",
+      "telefono": "783-567-19",
+      "direccion": "Av. Sucre Nro. 202 Esquina Calle Los Amigos",
+      "id": 4
     }
   ],
   "cursos": [
     {
       "titulo": "Laravel CRUD y Despliegue de Aplicaciones Web",
       "duracion": "90",
-      "categoriaId": 7,
+      "categoriaId": 6,
       "docenteId": 1,
       "estado": "Activo",
-      "contenido": "Este curso completo de Laravel está diseñado para proporcionar una comprensión profunda y práctica del desarrollo de aplicaciones web usando uno de los frameworks PHP más populares y poderosos. A lo largo del curso, los estudiantes aprenderán desde los conceptos básicos hasta técnicas avanzadas, equipándolos con las habilidades necesarias para construir, desplegar y mantener aplicaciones web robustas y eficientes",
+      "contenido": "Este curso completo de Laravel está diseñado para proporcionar una comprensión profunda y práctica del desarrollo de aplicaciones web usando uno de los frameworks PHP más populares y poderosos",
       "id": 1
     },
     {
+      "titulo": "Crea un Sistema de Reservas con Laravel, PayPal y WhatsApp",
+      "duracion": "120",
+      "categoriaId": 6,
+      "docenteId": 2,
+      "estado": "Activo",
+      "contenido": "En este curso aprenderás a desarrollar un sistema de reservas completo desde cero utilizando Laravel y MySQL. A lo largo de las lecciones, te guiaré paso a paso en la creación de un sistema que permitirá a los usuarios reservar citas o servicios con consultores, mientras gestionas la disponibilidad y los horarios de manera eficiente",
+      "id": 2
+    },
+    {
+      "titulo": "Laravel ORM Migración a MySQL, PostgreSQL, MSSQL y SQLite",
+      "duracion": "90",
+      "categoriaId": 6,
+      "docenteId": 4,
+      "estado": "Activo",
+      "contenido": "En este curso, aprenderás cómo utilizar el ORM de Laravel para migrar y gestionar bases de datos en múltiples motores, incluyendo MySQL, PostgreSQL, MSSQL y SQLite. Laravel es uno de los frameworks PHP más populares, y su sistema ORM, conocido como Eloquent, facilita la interacción con bases de datos, eliminando la necesidad de escribir consultas SQL manualmente",
+      "id": 3,
+      "categoria": {
+        "nombre": "Bootcamp",
+        "estado": "Activo",
+        "id": 2
+      },
+      "docente": {
+        "nombre": "Sonia Martinez",
+        "email": "sonia.martinez@gmail.com",
+        "telefono": "783-567-19",
+        "direccion": "Av. Sucre Nro. 202 Esquina Calle Los Amigos",
+        "id": 4
+      }
+    },
+    {
       "titulo": "Bases de Datos NoSQL con Mongo DB",
+      "duracion": "150",
+      "categoriaId": 1,
+      "docenteId": 3,
+      "estado": "Activo",
+      "contenido": "Seguro conoces las tradicionales bases de datos relacionales basadas en tablas como MySQL o Postgres. Pero, ¿sabías que existen sistemas de bases de datos no basados en tablas y que pueden darte el mismo o mejor rendimiento? Estos sistemas se llaman NoSQL y MongoDB es uno de los más populares del mundo, usado por millones de desarrolladores y empresas como Adobe, Google, Cisco o Electronic Arts",
+      "id": 4
+    },
+    {
+      "titulo": "SVG desde cero",
       "duracion": "60",
+      "categoriaId": 3,
+      "docenteId": 1,
+      "estado": "Activo",
+      "contenido": "SVG (Scalable Vector Graphics) es un formato de imágenes vectoriales para web en formato XML. Es decir, puedes crearlas con programas como Illustrator o Sketch pero también directamente con código. Es más, crearlas en illustrator y luego manipularlas por código, animándolas con CSS o creando interacciones con JavaScript. SVG es un estándar de la W3C y tiene soporte completo por todos los navegadores. Pre-requisitos para tomar el curso: Conocimientos en HTML, CSS Y JS",
+      "id": 5
+    },
+    {
+      "titulo": "Base de datos con PostgreSQL",
+      "duracion": "90",
+      "categoriaId": 1,
+      "docenteId": 3,
+      "estado": "Activo",
+      "contenido": "La gestión de bases de datos puede ser un verdadero dolor de cabeza. ¿Y si te dijera que puedes manejar tus datos de forma fácil, eficiente y 100% gratuita aunque tu Bases de datos se pequeña o grande? Para eso existe PostgreSQL, un motor de base de datos relacional open source que se caracteriza por ser multiplataforma y favorita de muchas empresas más por su escalabilidad, confiabilidad, flexibilidad y seguridad",
+      "id": 6,
+      "categoria": {
+        "nombre": "Base de Datos",
+        "estado": "Activo",
+        "id": 1
+      },
+      "docente": {
+        "nombre": "Ana María Álvarez",
+        "email": "ana.maria.alvarez@hotmail.com",
+        "telefono": "432-456-32",
+        "direccion": "Calle Bueno Nro. 12, esquina Camacho",
+        "id": 3
+      }
+    },
+    {
+      "titulo": "Introducción a Inteligencia Artificial",
+      "duracion": "60",
+      "categoriaId": 5,
+      "docenteId": 4,
+      "estado": "Activo",
+      "contenido": "En este curso repasamos conceptos fundamentales sobre la Inteligencia Artificial, así como su historia y aplicaciones. Nos enfocamos un poco más en el Aprendizaje Automático (Machine Learning) del tipo supervisado, estudiando a más detalles las Redes Neuronales Artificiales y escribiendo ejemplos básicos en Python sobre Redes Neuronales",
+      "id": 7
+    },
+    {
+      "titulo": "Inteligencia Artificial con IBM Watson",
+      "duracion": "120",
+      "categoriaId": 5,
+      "docenteId": 2,
+      "estado": "Activo",
+      "contenido": "Es muy común que se asocie la Inteligencia Artificial con genios de las computadoras o con súper programadores. Sin embargo, IBM Watson es una plataforma que te permite aplicar la IA en tu negocio o en tus proyectos sin saber programar. Esto gracias a que cuenta con servicios de Inteligencia Artificial ya construidos que son fáciles de aprender y de implementar",
+      "id": 8
+    },
+    {
+      "titulo": "Algoritmos y Estructuras de Datos",
+      "duracion": "40",
+      "categoriaId": 4,
+      "docenteId": 3,
+      "estado": "Activo",
+      "contenido": "En este curso de Algoritmos y Estructuras de Datos aprenderás de forma básica y muy completa las nociones más elementales sobre estos pilares del desarrollo de software",
+      "id": 9
+    },
+    {
+      "titulo": "Node.js - Bootcamp Desarrollo Web inc. MVC y REST APIs",
+      "duracion": "120",
       "categoriaId": 2,
       "docenteId": 2,
       "estado": "Activo",
-      "contenido": "Seguro conoces las tradicionales bases de datos relacionales basadas en tablas como MySQL o Postgres. Pero, ¿sabías que existen sistemas de bases de datos no basados en tablas y que pueden darte el mismo o mejor rendimiento? Estos sistemas se llaman NoSQL y MongoDB es uno de los más populares del mundo, usado por millones de desarrolladores y empresas como Adobe, Google, Cisco o Electronic Arts",
-      "id": 2,
-      "categoria": {
-        "nombre": "Diseño Web",
-        "estado": "Activo",
-        "id": 4
-      },
-      "docente": {
-        "nombre": "Luis Alvarez Martinez",
-        "email": "luis.alvarez-m@gmail.com",
-        "telefono": "654-04-678",
-        "direccion": "Calle Padilla Nro. 123 esq. Av. Los Álamos",
-        "id": 2,
-        "titulo": "Bases de Datos NoSQL con Mongo DB",
-        "duracion": "60",
-        "categoriaId": 4,
-        "docenteId": 2,
-        "estado": "Activo",
-        "contenido": "Seguro conoces las tradicionales bases de datos relacionales basadas en tablas como MySQL o Postgres. Pero, ¿sabías que existen sistemas de bases de datos no basados en tablas y que pueden darte el mismo o mejor rendimiento? Estos sistemas se llaman NoSQL y MongoDB es uno de los más populares del mundo, usado por millones de desarrolladores y empresas como Adobe, Google, Cisco o Electronic Arts",
-        "categoria": {
-          "nombre": "Base de Datos",
-          "estado": "Activo",
-          "id": 2
-        },
-        "docente": {
-          "nombre": "Luis Alvarez Martinez",
-          "email": "luis.alvarez-m@gmail.com",
-          "telefono": "654-04-678",
-          "direccion": "Calle Padilla Nro. 123 esq. Av. Los Álamos",
-          "id": 2,
-          "titulo": "Bases de Datos NoSQL con Mongo DB",
-          "duracion": "60",
-          "categoriaId": 3,
-          "docenteId": 2,
-          "estado": "Activo",
-          "contenido": "Seguro conoces las tradicionales bases de datos relacionales basadas en tablas como MySQL o Postgres. Pero, ¿sabías que existen sistemas de bases de datos no basados en tablas y que pueden darte el mismo o mejor rendimiento? Estos sistemas se llaman NoSQL y MongoDB es uno de los más populares del mundo, usado por millones de desarrolladores y empresas como Adobe, Google, Cisco o Electronic Arts",
-          "categoria": {
-            "nombre": "Base de Datos",
-            "estado": "Activo",
-            "id": 2
-          },
-          "docente": {
-            "nombre": "Luis Alvarez Martinez",
-            "email": "luis.alvarez-m@gmail.com",
-            "telefono": "654-04-678",
-            "direccion": "Calle Padilla Nro. 123 esq. Av. Los Álamos",
-            "id": 2
-          }
-        }
-      }
-    }
-  ],
-  "clientes": [
-    {
-      "id": "1",
-      "nombre": "Juan Lopez r",
-      "telefono": "555-1234",
-      "direccion": "123 Calle Falsa",
-      "mascotas": [
-        {
-          "id": "1",
-          "nombre": "Fido",
-          "especie": "Perro",
-          "raza": "Labrador",
-          "edad": "5",
-          "clienteId": "1"
-        },
-        {
-          "id": "2",
-          "nombre": "Whiskers",
-          "especie": "Gato",
-          "raza": "Siamés",
-          "edad": "3",
-          "clienteId": "1"
-        }
-      ]
-    },
-    {
-      "id": "3",
-      "nombre": "Luis Martínez",
-      "telefono": "555-9999",
-      "direccion": "789 Calle Inventada"
+      "contenido": "¿Deseas aprender Node.js para Desarrollo Web? Estas en el curso adecuado para hacerlo. ¿Deseas aprender Node.js para Desarrollo Web? Estas en el curso adecuado para hacerlo.",
+      "id": 10
     }
   ]
 }

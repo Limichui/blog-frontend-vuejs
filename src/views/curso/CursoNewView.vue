@@ -90,6 +90,11 @@ export default {
       if (!this.form.duracion) {
         this.errors.duracion= 'La Duración es obligatorio.';
       }
+      if (!this.form.duracion) {
+        this.errors.duracion= 'La Duración es obligatorio.';
+      } else if (!/^\d+$/.test(this.form.duracion)) {
+        this.errors.duracion = 'La Duración debe ser un número positivo entero.';
+      }
 
       if (!this.form.categoriaId) {
         this.errors.categoriaId = 'La Categoría es obligatorio.';

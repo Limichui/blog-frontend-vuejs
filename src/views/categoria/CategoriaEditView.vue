@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Editar Mascota</h1>
+    <h1>Editar Categoría</h1>
     <form @submit.prevent="submitForm" v-if="form">
       <div class="form-group">
         <label for="name">Nombre de la categoría:</label>

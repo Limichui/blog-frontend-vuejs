@@ -33,12 +33,12 @@
                 </select>
 
                 <label for="cbDocente"> Docente: </label>
-                <select class="ms-1 me-3" id="cbDocente" v-model="filter.veterinarioId">
-                    <option value="">Todos</option>
-                    <option :value="veterinario.id" v-for="(veterinario, index) in veterinarioList" :key="`veterinario-${index}`">{{ veterinario.nombre }}
+                <select class="ms-1 me-3" id="cbDocente" v-model="filter.docenteId">
+                    <option value="" selected>Todos</option>
+                    <option :value="docente.id" v-for="(docente, index) in docenteList" :key="`docente-${index}`">{{ docente.nombre }}
                     </option>
                 </select>
-                <button type="submit" class="btn btn-lith">Fitrar</button>
+                <button type="submit" class="btn btn-primary">Fitrar</button>
             </form>
         </div>
         <table>
@@ -94,11 +94,12 @@ export default {
             textToSearch: '',
             textToFilter: '',
             itemList: [],
-            veterinarioList: [],
+            categoriaList: [],
+            docenteList: [],
             path: '',
             filter: {
-                fecha: null,
-                veterinarioId:''
+                categoriaId:'',
+                docenteId:''
             }
         }
     },
@@ -118,7 +119,7 @@ export default {
         getList() {
             const vm = this;
             
-            this.path = this.baseUrl + "/cursos?_expand=categoria&_expand=docente&q=" + this.textToSearch;
+            this.path = this.baseUrl + "/cursos?=&_expand=categoria" + this.textToFilter + "&_expand=docente&q=" + this.textToSearch;
 
             this.axios.get(this.path)
                 .then(function (response) {
@@ -162,11 +163,11 @@ export default {
         },
         filtrar() {
             this.textToFilter = '';
-            if (this.filter.fecha != null && this.filter.fecha != '') {
-                this.textToFilter += "&fecha=" + this.filter.fecha;
+            if (this.filter.categoriaId != null && this.filter.categoriaId != '') {
+                this.textToFilter += "&categoriaId=" + this.filter.categoriaId;
             }
-            if (this.filter.veterinarioId != null && this.filter.veterinarioId != '') {
-                this.textToFilter += "&veterinarioId=" + this.filter.veterinarioId;
+            if (this.filter.docenteId != null && this.filter.docenteId != '') {
+                this.textToFilter += "&docenteId=" + this.filter.docenteId;
             }
             this.getList();
         },
@@ -183,7 +184,28 @@ export default {
         },
         showToast(message, type) {
             this.$toast.show(message, type);
-        }
+        },
+
+        getCategoriaList() {
+            const vm = this;
+            this.axios.get(this.baseUrl + "/categorias")
+                .then(function (response) {
+                vm.categoriaList = response.data;
+                })
+                .catch(function (error) {
+                console.error(error);
+                });
+        },
+        getDocenteList() {
+            const vm = this;
+            this.axios.get(this.baseUrl + "/docentes")
+                .then(function (response) {
+                vm.docenteList = response.data;
+                })
+                .catch(function (error) {
+                console.error(error);
+                });
+        },
     },
     computed: {
         // propiedades computadas que dependen de otras propiedades reactivas
@@ -198,7 +220,8 @@ export default {
     },
     mounted() {
         this.getList();
-        //this.getVeterinarioList();
+        this.getCategoriaList();
+        this.getDocenteList();
     },
     emits: [] // los eventos personalizados que el componente puede emitir.
 }

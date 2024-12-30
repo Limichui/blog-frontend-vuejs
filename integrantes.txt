@@ -1,4 +1,4 @@
-Practica2: Proyecto Final Vue3
+Practica 2: Proyecto Final - Vue.js 3
 
 Nombre(s) de integrante(s):
 - Limbert Olmos Mercado
@@ -8,9 +8,11 @@ Pasos para iniciar el proyecto
 1) npm install
 2) npm run serve
 
-Pasos para iniciar el backend
+Pasos para el backend
 
-1) json-server --watch db.json --port 4000 
+1) npm install -g json-server@0.17.1
+2) Dirigirse a la carpeta de proyecto hasta la carpeta db, Ejemplo: <ruta>\blog-frontend-vuejs\db>
+3) json-server --watch db.json --port 4000 
 
 Dependencias
 
