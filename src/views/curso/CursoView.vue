@@ -1,29 +1,43 @@
 <template>
     <div>
         <Modal v-model:modelValue="showModalNuevo">
-            <CitaNewView @on-register="onRegister()" />
+            <CursoNewView @on-register="onRegister()" />
         </Modal>
         <Modal v-model:modelValue="showModalEdit">
-            <CitaEditView @on-update="onUpdate()" :item="itemToEdit" />
+            <CursoEditView @on-update="onUpdate()" :item="itemToEdit" />
         </Modal>
-        <h1>Lista de Citas</h1>
-        <p>{{path}}</p>
+
+        <!-- Modal de Confirmación -->
+        <ConfirmModal
+        v-if="showConfirmModal"
+        :visible="showConfirmModal"
+        title="Eliminar Curso"
+        message="¿Estás seguro de que deseas eliminar este registro?"
+        @confirm="confirmDelete"
+        @cancel="cancelDelete"
+        />
+
+        <h1>Lista de Cursos</h1>
         <button @click="showModalNuevo = true" class="btn btn-primary">Nuevo</button>
-        <button @click="buscar()" class="btn btn-lith" style="float:right">Buscar</button>
-        <input type="search" style="float:right" v-model="textToSearch" @search="buscar()" placeholder="Buscar por motivo">
+        <button @click="buscar()" class="ms-2 btn btn-primary" style="float:right" >Buscar</button>
+        <input type="search" style="float:right" v-model="textToSearch" @search="buscar()" placeholder="Buscar por título">
         <div style="margin: 20px 0;">
             <h3>Filtros:</h3>
             <form @submit.prevent="filtrar()">
 
-                <label for="fecha"> Fecha: </label>
-                <input type="date" id="fecha" v-model="filter.fecha" placeholder="Ingrese la fecha" />
+                <label for="cbCategoria"> Categoría: </label>
+                <select class="ms-1 me-3" id="cbCategoria" v-model="filter.categoriaId">
+                    <option value="">Todos</option>
+                    <option :value="categoria.id" v-for="(categoria, index) in categoriaList" :key="`categoria-${index}`">{{ categoria.nombre }}
+                    </option>
+                </select>
 
-                <label for="veterinario"> Veterinario: </label>
-                <select id="veterinario" v-model="filter.veterinarioId">
+                <label for="cbDocente"> Docente: </label>
+                <select class="ms-1 me-3" id="cbDocente" v-model="filter.veterinarioId">
                     <option value="">Todos</option>
                     <option :value="veterinario.id" v-for="(veterinario, index) in veterinarioList" :key="`veterinario-${index}`">{{ veterinario.nombre }}
                     </option>
-                  </select>
+                </select>
                 <button type="submit" class="btn btn-lith">Fitrar</button>
             </form>
         </div>
@@ -31,45 +45,47 @@
             <thead>
                 <tr>
                     <th>No.</th>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Veterinario</th>
-                    <th>Cliente</th>
-                    <th>Mascota</th>
-                    <th>Motivo</th>
-                    <th></th>
+                    <th>Título</th>
+                    <th>Duración</th>
+                    <th>Categoría</th>
+                    <th>Docente</th>
+                    <th>Estado</th>
+                    <th>Contenido</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(item, index) in itemList" :key="index">
                     <td>{{ 1 + index }}</td>
-                    <td>{{ item.fecha }}</td>
-                    <td>{{ item.hora }}</td>
-                    <td>{{ item.veterinario.nombre }}</td>
-                    <td>{{ item.cliente.nombre }}</td>
-                    <td>{{ item.mascota.nombre }}</td>
-                    <td>{{ item.motivo }}</td>
+                    <td>{{ item.titulo }}</td>
+                    <td>{{ item.duracion }}</td>
+                    <td>{{ item.categoria.nombre }}</td>
+                    <td>{{ item.docente.nombre }}</td>
+                    <td>{{ item.estado }}</td>
+                    <td>{{ item.contenido }}</td>
                     <td>
                         <button @click="edit(item)" class="btn btn-dark" style="margin-right: 15px;">Editar</button>
-                        <button @click="Eliminar(item.id)" class="btn btn-danger">Eliminar</button>
+                        <button @click="promptDelete(item.id)" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
-  
+
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Modal from '../../components/Modal.vue'
-import CitaNewView from './CitaNewView.vue'
-import CitaEditView from './CitaEditView.vue'
-
+import CursoNewView from './CursoNewView.vue'
+import CursoEditView from './CursoEditView.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 export default {
-    name: 'Cita',
+    name: 'Curso',
     data() {
         return {
+            showConfirmModal: false, // Controla la visibilidad del modal de confirmación
+            idToDelete: null,        // Almacena el ID del registro a eliminar
             currentPage: 1,
             totalPages: 100, // Este valor debe ser calculado según tus datos
             showModalNuevo: false,
@@ -89,16 +105,22 @@ export default {
     components: {
         // Registro de componentes que se utilizaran.
         Modal,
-        CitaNewView,
-        CitaEditView
+        CursoNewView,
+        CursoEditView,
+        ConfirmModal
     },
     methods: {
         // métodos que se pueden llamar desde la plantilla o desde otras partes del componente.
+
+        
+        
         ...mapActions(['increment']),
         getList() {
             const vm = this;
-            this.path = this.baseUrl + "/citas?_sort=fecha,hora&_order=desc,asc&_expand=cliente&_expand=mascota&_expand=veterinario" + this.textToFilter + "&q=" + this.textToSearch;
-            this.axios.get(this.baseUrl + "/citas?_sort=fecha,hora&_order=desc,asc&_expand=cliente&_expand=mascota&_expand=veterinario" + this.textToFilter + "&q=" + this.textToSearch)
+            
+            this.path = this.baseUrl + "/cursos?_expand=categoria&_expand=docente&q=" + this.textToSearch;
+
+            this.axios.get(this.path)
                 .then(function (response) {
                     vm.itemList = response.data;
                 })
@@ -106,33 +128,34 @@ export default {
                     console.error(error);
                 });
         },
-        getVeterinarioList() {
-            const vm = this;
-            this.axios.get(this.baseUrl + "/veterinarios")
-                .then(function (response) {
-                    vm.veterinarioList = response.data;
-                })
-                .catch(function (error) {
-                    console.error(error);
-                });
-        },
+        
         edit(item) {
             this.itemToEdit = Object.assign({}, item);
             this.showModalEdit = true;
         },
-        Eliminar(id) {
-            if (confirm("¿Esta Seguro de eliminar el registro?")) {
-                const vm = this;
-                this.axios.delete(this.baseUrl + "/citas/" + id)
-                    .then(function (response) {
-                        vm.getList();
-                        vm.$toast.show("Registro eliminado.", "danger");
-                    })
-                    .catch(function (error) {
-                        console.error(error);
-                    });
-            }
-
+        promptDelete(id) {
+            this.idToDelete = id;
+            this.showConfirmModal = true; // Muestra el modal de confirmación
+        },
+        confirmDelete() {
+            this.eliminar(this.idToDelete);
+            this.showConfirmModal = false; // Oculta el modal
+            this.idToDelete = null; // Limpia el ID
+        },
+        cancelDelete() {
+            this.showConfirmModal = false; // Oculta el modal
+            this.idToDelete = null; // Limpia el ID
+        },
+        eliminar(id) {
+            const vm = this;
+            this.axios.delete(this.baseUrl + "/cursos/" + id)
+                .then(function (response) {
+                    vm.getList();
+                    vm.$toast.show("Registro eliminado.", "danger");
+                })
+                .catch(function (error) {
+                    console.error(error);
+                });
         },
         buscar(value) {
             this.getList();
@@ -175,10 +198,10 @@ export default {
     },
     mounted() {
         this.getList();
-        this.getVeterinarioList();
+        //this.getVeterinarioList();
     },
     emits: [] // los eventos personalizados que el componente puede emitir.
 }
 </script>
-  
+
 <style></style>

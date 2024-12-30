@@ -1,56 +1,63 @@
 <template>
     <div>
         <Modal v-model:modelValue="showModalNuevo">
-            <MascotaNew @on-register="onRegister($event)"/>
+            <CategoriaNew @on-register="onRegister($event)"/>
         </Modal>
         <Modal v-model:modelValue="showModalEdit">
-            <MascotaEdit @on-update="onUpdate($event)" :item="itemToEdit"/>
+            <CategoriaEdit @on-update="onUpdate($event)" :item="itemToEdit"/>
         </Modal>
-        <h1>Lista de Mascotas</h1>
+        
+        <!-- Modal de Confirmación -->
+        <ConfirmModal
+        v-if="showConfirmModal"
+        :visible="showConfirmModal"
+        title="Eliminar Categoría"
+        message="¿Estás seguro de que deseas eliminar este registro?"
+        @confirm="confirmDelete"
+        @cancel="cancelDelete"
+        />
+        
+        <h1>Lista de Categorías</h1>
         <button @click="showModalNuevo = true" class="btn btn-primary">Nuevo</button>
-        <button @click="buscar()" class="btn btn-lith" style="float:right">Buscar</button>
         <input type="search" style="float:right" v-model="textToSearch" @search="buscar()" placeholder="Buscar por nombre">
         <table>
             <thead>
                 <tr>
                     <th>No.</th>
                     <th>Nombre</th>
-                    <th>Especie</th>
-                    <th>Raza</th>
-                    <th>Edad</th>
-                    <th>Dueno</th>
-                    <th></th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="(item, index) in itemList" :key="index">
+                <tr v-for="(item, index) in filteredItems" :key="index">
                     <td>{{ 1 + index }}</td>
                     <td>{{ item.nombre }}</td>
-                    <td>{{ item.especie }}</td>
-                    <td>{{ item.raza }}</td>
-                    <td>{{ item.edad }}</td>
-                    <td>{{ item.cliente.nombre }}</td>
+                    <td>{{ item.estado }}</td>
                     <td>
                         <button @click="edit(item)" class="btn btn-dark" style="margin-right: 15px;">Editar</button>
-                        <button @click="Eliminar(item.id)" class="btn btn-danger">Eliminar</button>
+                        <button @click="promptDelete(item.id)" class="btn btn-danger">Eliminar</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 </template>
-  
+
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 import Modal from '../../components/Modal.vue'
-import MascotaNew from './MascotaNewView.vue'
-import MascotaEdit from './MascotaEditView.vue'
+import CategoriaNew from './CategoriaNewView.vue'
+import CategoriaEdit from './CategoriaEditView.vue'
+import ConfirmModal from '@/components/ConfirmModal.vue'
 
 
 export default {
-    name: 'Mascota',
+    name: 'Categoria',
     data() {
         return {
+            showConfirmModal: false, // Controla la visibilidad del modal de confirmación
+            idToDelete: null,        // Almacena el ID del registro a eliminar
             currentPage: 1,
             totalPages: 100, // Este valor debe ser calculado según tus datos
             showModalNuevo: false,
@@ -63,15 +70,17 @@ export default {
     components: {
         // Registro de componentes que se utilizaran.
         Modal,
-        MascotaNew,
-        MascotaEdit
+        CategoriaNew,
+        CategoriaEdit,
+        ConfirmModal
     },
     methods: {
         // métodos que se pueden llamar desde la plantilla o desde otras partes del componente.
         ...mapActions(['increment']),
         getList() {
             const vm = this;
-            this.axios.get(this.baseUrl + "/mascotas?_expand=cliente&q=" + this.textToSearch)
+            //alert(this.baseUrl);
+            this.axios.get(this.baseUrl + "/categorias?&q=" + this.textToSearch)
                 .then(function (response) {
                     vm.itemList = response.data;
                 })
@@ -83,10 +92,22 @@ export default {
             this.itemToEdit = Object.assign({}, item);
             this.showModalEdit = true;
         },
-        Eliminar(id) {
-            if (confirm("¿Esta Seguro de eliminar el registro?")) {
+        promptDelete(id) {
+            this.idToDelete = id;
+            this.showConfirmModal = true; // Muestra el modal de confirmación
+        },
+        confirmDelete() {
+            this.eliminar(this.idToDelete);
+            this.showConfirmModal = false; // Oculta el modal
+            this.idToDelete = null; // Limpia el ID
+        },
+        cancelDelete() {
+            this.showConfirmModal = false; // Oculta el modal
+            this.idToDelete = null; // Limpia el ID
+        },
+        eliminar(id) {
                 const vm = this;
-                this.axios.delete(this.baseUrl + "/mascotas/" + id)
+                this.axios.delete(this.baseUrl + "/categorias/" + id)
                     .then(function (response) {
                         vm.getList();
                         vm.$toast.show("Registro eliminado.", "danger");
@@ -94,8 +115,6 @@ export default {
                     .catch(function (error) {
                         console.error(error);
                     });
-            }
-
         },
         buscar() {
             this.getList();
@@ -121,6 +140,15 @@ export default {
         ...mapGetters(['doubleCount', 'getBaseUrl']),
         baseUrl() {
             return this.getBaseUrl
+        },
+        filteredItems() {
+            if (!this.textToSearch) {
+            return this.itemList; // Si no hay texto, muestra todos los elementos
+            }
+
+            // Filtrar elementos por coincidencia parcial en el nombre (ignorar mayúsculas/minúsculas)
+            const searchText = this.textToSearch.toLowerCase();
+            return this.itemList.filter(item => item.nombre.toLowerCase().includes(searchText));
         }
     },
     props: {
@@ -132,5 +160,5 @@ export default {
     emits: [] // los eventos personalizados que el componente puede emitir.
 }
 </script>
-  
+
 <style></style>

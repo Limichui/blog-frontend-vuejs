@@ -3,11 +3,7 @@
         <div class="logo">
             <img src="@/assets/logo.png" alt="Mi Logo" />
         </div>
-        <button class="hamburger" @click="toggleMenu"></button>
-        <!-- Ícono de hamburguesa -->
-        <span>Hola</span>
-
-        <div class="menu" :class="{ active: isMenuOpen }">
+        <div class="menu">
             <slot></slot>
         </div>
     </div>
@@ -16,17 +12,9 @@
 <script>
 export default {
     name: 'Menu',
-    data() {
-        return {
-            isMenuOpen: false,
-        };
-    },
     computed: {
     },
     methods: {
-        toggleMenu() {
-        this.isMenuOpen = !this.isMenuOpen;
-    },
     }
 }
 </script>

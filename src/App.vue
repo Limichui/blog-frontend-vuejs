@@ -2,9 +2,9 @@
   <div class="container">
     <Menu>
       <router-link to="/">Home</router-link>
-      <router-link to="/about">Cursos</router-link>
-      <router-link to="/cliente">Docentes</router-link>
-      <router-link to="/mascota">Categorias</router-link>
+      <router-link to="/curso">Cursos</router-link>
+      <router-link to="/docente">Docentes</router-link>
+      <router-link to="/categoria">Categorias</router-link>
     </Menu>
     <div>
       <router-view />

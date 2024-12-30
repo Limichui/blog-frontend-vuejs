@@ -1,12 +1,20 @@
 <template>
   <div>
-    <h1>Registrar Cliente</h1>
-    <form @submit.prevent="submitForm()">
+    <h1>Editar Docente</h1>
+    <form @submit.prevent="submitForm" v-if="form">
+      
       <div class="form-group">
         <label for="name">Nombre:</label>
         <input type="text" id="name" v-model="form.nombre" :class="{ 'is-invalid': errors.nombre }"
           placeholder="Ingrese el nombre" />
         <div v-if="errors.nombre" class="invalid-feedback">{{ errors.nombre }}</div>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="text" id="email" v-model="form.email" :class="{ 'is-invalid': errors.email }"
+          placeholder="Ingrese el email" />
+        <div v-if="errors.email" class="invalid-feedback">{{ errors.email }}</div>
       </div>
 
       <div class="form-group">
@@ -23,7 +31,7 @@
         <div v-if="errors.direccion" class="invalid-feedback">{{ errors.direccion }}</div>
       </div>
 
-      <button type="submit" class="btn btn-primary">Registrar</button>
+      <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     </form>
   </div>
 </template>
@@ -31,17 +39,13 @@
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex'
 export default {
-  name: 'RegisterClient',
+  name: 'DocenteEdit',
   data() {
     return {
-      form: {
-        nombre: '',
-        telefono: '',
-        direccion: ''
-      },
       errors: {}
     };
   },
+  props: ['item'],
   methods: {
     ...mapActions(['increment']),
     validateForm() {
@@ -49,6 +53,12 @@ export default {
 
       if (!this.form.nombre) {
         this.errors.nombre = 'El nombre es requerido.';
+      }
+
+      if (!this.form.email) {
+        this.errors.email = 'El teléfono es obligatorio.';
+      } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(this.form.email)) {
+        this.errors.email = 'El email no es válido.';
       }
 
       if (!this.form.telefono) {
@@ -71,6 +81,7 @@ export default {
         // Reiniciar el formulario
         this.form = {
           nombre: '',
+          email: '',
           telefono: '',
           direccion: ''
         };
@@ -78,18 +89,27 @@ export default {
     },
     save() {
       const vm = this;
-      this.axios.post(this.baseUrl + "/clientes", this.form)
+      this.axios.patch(this.baseUrl + "/docentes/" + this.item.id, this.form)
         .then(function (response) {
-          if (response.status == '201') {
-            vm.$emit('on-register', response.data);
+          if (response.status == '200') {
+            vm.$emit('on-update', response.data);
           }
-          console.log(response);
-          //vm.itemList = response.data;
+          console.log(response); 
         })
         .catch(function (error) {
           console.error(error);
         });
-    }
+    },
+    getDocenteList() {
+      const vm = this;
+      this.axios.get(this.baseUrl + "/docentes")
+        .then(function (response) {
+          vm.categoriaList = response.data;
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    },
   },
   computed: {
     // propiedades computadas que dependen de otras propiedades reactivas
@@ -97,8 +117,15 @@ export default {
     ...mapGetters(['doubleCount', 'getBaseUrl']),
     baseUrl() {
       return this.getBaseUrl
+    },
+    form() {
+      return Object.assign({}, this.item);
     }
   },
+  mounted() {
+    this.getDocenteList();
+  },
+  props: ['item']
 }
 </script>
   

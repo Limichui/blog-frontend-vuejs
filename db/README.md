@@ -1,4 +1,4 @@
-# Backend veterinaria
+# Backend cursos
 
 ## Project setup
 ```
